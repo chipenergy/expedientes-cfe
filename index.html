@@ -187,7 +187,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 const existingPdfBytes = await response.arrayBuffer();
                 const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
                 const pages = pdfDoc.getPages();
-                const firstPage = pages;
+                const firstPage = pages[0];
                 const { height } = firstPage.getSize();
 
                 const draw = (text, x, y, size = 10) => {
