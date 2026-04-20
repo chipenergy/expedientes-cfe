@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Expedientes | Chipenergy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans pb-20">
+
+    <nav class="bg-green-600 text-white p-4 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">Chipenergy Documentos CFE</h1>
+            <div>
+                <button onclick="switchTab('agente')" class="px-4 py-2 hover:bg-green-700 rounded bg-green-700">Modo Agente</button>
+                <button onclick="switchTab('admin')" class="px-4 py-2 hover:bg-green-700 rounded text-sm">Configuración (Admin)</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto mt-8 p-4">
+        
+        <section id="agente-view" class="bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold mb-6 border-b pb-2">Captura de Datos del Cliente</h2>
+            <form id="client-form" class="space-y-8">
+                
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">1. Datos Personales</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-sm font-medium">Nombre Completo</label><input type="text" id="c_nombre" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Teléfono</label><input type="text" id="c_telefono" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Correo Electrónico</label><input type="email" id="c_correo" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">INE No.</label><input type="text" id="c_ine" class="w-full border rounded p-2"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">2. Datos del Domicilio</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Calle</label><input type="text" id="d_calle" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Número Exterior</label><input type="text" id="d_num_ext" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Número Interior</label><input type="text" id="d_num_int" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Código Postal</label><input type="text" id="d_cp" class="w-full border rounded p-2"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Colonia / Población</label><input type="text" id="d_colonia" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Municipio / Ciudad</label><input type="text" id="d_municipio" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Estado</label><input type="text" id="d_estado" class="w-full border rounded p-2"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">3. Datos del Servicio CFE</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div><label class="block text-sm font-medium">RPU (12 dígitos)</label><input type="text" id="cfe_rpu" class="w-full border rounded p-2"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">RMU</label><input type="text" id="cfe_rmu" class="w-full border rounded p-2"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Número de Cuenta</label><input type="text" id="cfe_cuenta" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tarifa</label><input type="text" id="cfe_tarifa" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Número de Medidor</label><input type="text" id="cfe_medidor" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tipo de Medidor</label><input type="text" id="cfe_tipo_medidor" class="w-full border rounded p-2" placeholder="Ej. Digital"></div>
+                        <div><label class="block text-sm font-medium">No. Fases</label><input type="text" id="cfe_fases" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">No. Hilos</label><input type="text" id="cfe_hilos" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Voltaje</label><input type="text" id="cfe_voltaje" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tensión de Suministro</label><input type="text" id="cfe_tension_sum" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Carga Total Instalada</label><input type="text" id="cfe_carga" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Demanda Contratada</label><input type="text" id="cfe_demanda" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Suministro en tensión:</label><input type="text" id="cfe_sum_tension" class="w-full border rounded p-2" placeholder="Ej. baja"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Celebrado con:</label><input type="text" id="cfe_celebrado" class="w-full border rounded p-2" value="Comisión Federal de Electricidad"></div>
+                        <div class="md:col-span-3"><label class="block text-sm font-medium">¿Se adquiere el suministro para su consumo?</label><select id="cfe_adquiere" class="w-full border rounded p-2"><option>Sí</option><option>No</option></select></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">4. Datos Técnicos del Sistema</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div><label class="block text-sm font-medium">Capacidad Instalada (kW)</label><input type="text" id="t_capacidad_kw" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Potencia Instalada</label><input type="text" id="t_potencia" class="w-full border rounded p-2" value="no aplica"></div>
+                        <div><label class="block text-sm font-medium">Gen. Promedio (kWh/mes)</label><input type="text" id="t_gen_mensual" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Cant. Paneles</label><input type="text" id="t_paneles" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Cant. Inversores</label><input type="text" id="t_inversores" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Marca Inversor</label><input type="text" id="t_marca_inv" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tecnología Generación</label><input type="text" id="t_tecnologia" class="w-full border rounded p-2" value="Solar"></div>
+                        <div><label class="block text-sm font-medium">Tensión Interconexión</label><input type="text" id="t_tension_inter" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tipo Central (Tensión)</label><input type="text" id="t_tipo_central" class="w-full border rounded p-2" value="baja tensión"></div>
+                        <div><label class="block text-sm font-medium">Régimen Contraprestación</label><input type="text" id="t_regimen" class="w-full border rounded p-2" value="net metering"></div>
+                        <div><label class="block text-sm font-medium">Coord. X (UTM)</label><input type="text" id="t_coord_x" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Coord. Y (UTM)</label><input type="text" id="t_coord_y" class="w-full border rounded p-2"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Latitud / Longitud</label><input type="text" id="t_lat_long" class="w-full border rounded p-2" placeholder="Ej. 20.58..., -100.81..."></div>
+                        <div><label class="block text-sm font-medium">Fecha Operación Normal</label><input type="text" id="t_fecha_op" class="w-full border rounded p-2" placeholder="Ej. 20/abril/2026"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">5. Datos Administrativos</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-sm font-medium">Testigo 1</label><input type="text" id="a_testigo_1" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Testigo 2</label><input type="text" id="a_testigo_2" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Fecha de Expedición</label><input type="text" id="a_fecha_exp" class="w-full border rounded p-2" placeholder="Ej. 20 de Abril de 2026"></div>
+                        <div><label class="block text-sm font-medium">Lugar de Firma</label><input type="text" id="a_lugar" class="w-full border rounded p-2" placeholder="Ej. Celaya, Gto."></div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="mt-8 flex justify-end">
+                <button class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700">Revisar y Generar PDFs</button>
+            </div>
+        </section>
+
+        <section id="admin-view" class="bg-white p-8 rounded-lg shadow-md hidden">
+            <h2 class="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Configuración (Administrador)</h2>
+            <p class="text-sm mb-4">Esta sección se configurará en el Paso 6.</p>
+        </section>
+
+    </main>
+
+    <script>
+        function switchTab(tab) {
+            document.getElementById('agente-view').classList.add('hidden');
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById(tab + '-view').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
