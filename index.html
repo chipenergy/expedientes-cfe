@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -101,23 +101,128 @@
                 </div>
 
             </form>
-            <div class="mt-8 flex justify-end">
-                <button class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700">Revisar y Generar PDFs</button>
+            <div class="mt-8 flex justify-end space-x-4">
+                <button onclick="generarFormato1()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700">Descargar Formato 1</button>
+                <button onclick="generarContratos()" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700">Descargar Contratos</button>
             </div>
         </section>
 
         <section id="admin-view" class="bg-white p-8 rounded-lg shadow-md hidden">
-            <h2 class="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Configuración (Administrador)</h2>
-            <p class="text-sm mb-4">Esta sección se configurará en el Paso 6.</p>
+            <h2 class="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Motor de Plantillas (Admin)</h2>
+            <p class="mb-4">Edita el texto base para los contratos. Usa corchetes <b>{{variable}}</b> para que el sistema los reemplace automáticamente.</p>
+            
+            <label class="block font-bold mt-4">Plantilla: Responsiva</label>
+            <textarea id="tpl_responsiva" class="w-full border rounded p-4 h-64 font-mono text-sm mt-2">
+Celaya, Gto. a {{a_fecha_exp}}
+
+RESPONSIVA
+
+Mediante la siguiente carta responsiva, yo C. {{c_nombre}} que efectúa un contrato Mercantil de Suministro Básico de Energía Eléctrica, en el domicilio {{d_calle}} {{d_num_ext}}, {{d_colonia}}, C.P. {{d_cp}}, {{d_municipio}}, {{d_estado}}, con Número de Servicio {{cfe_rpu}},
+
+Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuenta con las claves para la correcta facturación...
+            </textarea>
         </section>
 
     </main>
 
+    <div id="print-container" style="display:none; padding: 40px; font-family: Arial, sans-serif; line-height: 1.5; text-align: justify;"></div>
+
     <script>
+        // Tab Switcher
         function switchTab(tab) {
             document.getElementById('agente-view').classList.add('hidden');
             document.getElementById('admin-view').classList.add('hidden');
             document.getElementById(tab + '-view').classList.remove('hidden');
+        }
+
+        // Helper: Get form values safely
+        function getVal(id) {
+            return document.getElementById(id).value.toUpperCase() || "";
+        }
+
+        // ------------- ENGINE 1: PROSE CONTRACTS (HTML2PDF) -------------
+        function generarContratos() {
+            const template = document.getElementById('tpl_responsiva').value;
+            let result = template
+                .replace(/{{c_nombre}}/g, getVal('c_nombre'))
+                .replace(/{{a_fecha_exp}}/g, getVal('a_fecha_exp'))
+                .replace(/{{d_calle}}/g, getVal('d_calle'))
+                .replace(/{{d_num_ext}}/g, getVal('d_num_ext'))
+                .replace(/{{d_colonia}}/g, getVal('d_colonia'))
+                .replace(/{{d_cp}}/g, getVal('d_cp'))
+                .replace(/{{d_municipio}}/g, getVal('d_municipio'))
+                .replace(/{{d_estado}}/g, getVal('d_estado'))
+                .replace(/{{cfe_rpu}}/g, getVal('cfe_rpu'));
+
+            const container = document.getElementById('print-container');
+            container.style.display = 'block';
+            container.innerText = result;
+
+            html2pdf().from(container).set({
+                margin: 20,
+                filename: 'Expediente_Textos_' + getVal('cfe_rpu') + '.pdf',
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            }).save().then(() => {
+                container.style.display = 'none';
+            });
+        }
+
+        // ------------- ENGINE 2: RIGID FORMATO 1 (PDF-LIB) -------------
+        async function generarFormato1() {
+            try {
+                // Fetch the blank PDF we uploaded in Step 5
+                const url = './formato1_base.pdf';
+                const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
+                
+                const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+                const pages = pdfDoc.getPages();
+                const firstPage = pages;
+                const { height } = firstPage.getSize();
+
+                // Draw configuration (Adjust X/Y coordinates based on the real CFE PDF grid)
+                const draw = (text, x, y, size = 10) => {
+                    firstPage.drawText(text || "", { x: x, y: height - y, size: size });
+                };
+
+                // Formato 1 Coordinate Mapping (Example points based on standard A4/Letter forms)
+                draw(getVal('t_fecha_op'), 450, 80); 
+                draw(getVal('c_nombre'), 50, 130);
+                draw(getVal('d_calle'), 50, 160);
+                draw(getVal('d_num_ext'), 250, 160);
+                draw(getVal('d_cp'), 400, 160);
+                draw(getVal('d_colonia'), 50, 190);
+                draw(getVal('d_municipio'), 250, 190);
+                draw(getVal('d_estado'), 400, 190);
+                draw(getVal('c_telefono'), 50, 220);
+                draw(getVal('c_correo'), 200, 220);
+                
+                // Gestor Fixed Data
+                draw("MARTIN ARIEL CORONA ALVAREZ", 50, 260);
+                draw("Representante Legal", 400, 260);
+                
+                // CFE Data
+                draw(getVal('cfe_rpu'), 50, 400);
+                draw("BAJA TENSIÓN", 250, 400);
+
+                // Tech Data
+                draw(getVal('t_capacidad') + " KW", 250, 450);
+                draw(getVal('t_gen_mensual') + " KWh", 400, 450);
+                draw(getVal('t_paneles') + " PANELES", 50, 600);
+                draw(getVal('t_coord_x'), 350, 600);
+                draw(getVal('t_coord_y'), 450, 600);
+
+                // Serialize and Download
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Formato_1_" + getVal('cfe_rpu') + ".pdf";
+                link.click();
+
+            } catch (error) {
+                alert("Error: Asegúrate de que subiste el archivo 'formato1_base.pdf' exactamente con ese nombre.");
+                console.error(error);
+            }
         }
     </script>
 </body>
