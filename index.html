@@ -257,7 +257,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                     margin: 20,
                     filename: 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.pdf',
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-                }).from(rawHtmlString).save();
+                }).from(rawHtmlString).outputImg().then(function(img) { document.body.appendChild(img); });
 
             } catch (error) {
                 alert("Error generando contratos: " + error.message);
