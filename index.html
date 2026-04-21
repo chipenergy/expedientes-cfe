@@ -25,15 +25,18 @@
     <main class="max-w-6xl mx-auto mt-8 p-4">
         
         <section id="agente-view" class="bg-white p-8 rounded-lg shadow-md">
-            <h2 class="text-2xl font-semibold mb-6 border-b pb-2">Captura de Datos del Cliente</h2>
+            <div class="flex justify-between items-center mb-6 border-b pb-2">
+                <h2 class="text-2xl font-semibold">Captura de Datos del Cliente</h2>
+                <button onclick="limpiarFormulario()" class="text-sm text-red-600 hover:text-red-800 border border-red-600 px-3 py-1 rounded">Limpiar Formulario</button>
+            </div>
             <form id="client-form" class="space-y-8">
                 
                 <div>
                     <h3 class="text-lg font-bold text-gray-700 mb-3">1. Datos Personales</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium">Nombre Completo</label><input type="text" id="c_nombre" class="w-full border rounded p-2" value="OSCAR MANRIQUE GONZALEZ ALATORRE"></div>
-                        <div><label class="block text-sm font-medium">Teléfono</label><input type="text" id="c_telefono" class="w-full border rounded p-2" value="4616117424"></div>
-                        <div><label class="block text-sm font-medium">Correo Electrónico</label><input type="email" id="c_correo" class="w-full border rounded p-2" value="magda83867@hotmail.com"></div>
+                        <div><label class="block text-sm font-medium">Nombre Completo</label><input type="text" id="c_nombre" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Teléfono</label><input type="text" id="c_telefono" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Correo Electrónico</label><input type="email" id="c_correo" class="w-full border rounded p-2"></div>
                         <div><label class="block text-sm font-medium">INE No.</label><input type="text" id="c_ine" class="w-full border rounded p-2"></div>
                     </div>
                 </div>
@@ -41,32 +44,32 @@
                 <div>
                     <h3 class="text-lg font-bold text-gray-700 mb-3">2. Datos del Domicilio</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Calle</label><input type="text" id="d_calle" class="w-full border rounded p-2" value="HDA ENCARNACION"></div>
-                        <div><label class="block text-sm font-medium">Número Exterior</label><input type="text" id="d_num_ext" class="w-full border rounded p-2" value="313"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Calle</label><input type="text" id="d_calle" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Número Exterior</label><input type="text" id="d_num_ext" class="w-full border rounded p-2"></div>
                         <div><label class="block text-sm font-medium">Número Interior</label><input type="text" id="d_num_int" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Código Postal</label><input type="text" id="d_cp" class="w-full border rounded p-2" value="38019"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Colonia / Población</label><input type="text" id="d_colonia" class="w-full border rounded p-2" value="PRADERAS DE LA HDA COL CYA"></div>
-                        <div><label class="block text-sm font-medium">Municipio / Ciudad</label><input type="text" id="d_municipio" class="w-full border rounded p-2" value="CELAYA"></div>
-                        <div><label class="block text-sm font-medium">Estado</label><input type="text" id="d_estado" class="w-full border rounded p-2" value="GUANAJUATO"></div>
+                        <div><label class="block text-sm font-medium">Código Postal</label><input type="text" id="d_cp" class="w-full border rounded p-2"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Colonia / Población</label><input type="text" id="d_colonia" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Municipio / Ciudad</label><input type="text" id="d_municipio" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Estado</label><input type="text" id="d_estado" class="w-full border rounded p-2"></div>
                     </div>
                 </div>
 
                 <div>
                     <h3 class="text-lg font-bold text-gray-700 mb-3">3. Datos del Servicio CFE</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div><label class="block text-sm font-medium">RPU (12 dígitos)</label><input type="text" id="cfe_rpu" class="w-full border rounded p-2" value="065011004185"></div>
+                        <div><label class="block text-sm font-medium">RPU (12 dígitos)</label><input type="text" id="cfe_rpu" class="w-full border rounded p-2"></div>
                         <div class="md:col-span-2"><label class="block text-sm font-medium">RMU</label><input type="text" id="cfe_rmu" class="w-full border rounded p-2"></div>
                         <div class="md:col-span-2"><label class="block text-sm font-medium">Número de Cuenta</label><input type="text" id="cfe_cuenta" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Tarifa</label><input type="text" id="cfe_tarifa" class="w-full border rounded p-2" value="01"></div>
-                        <div><label class="block text-sm font-medium">Número de Medidor</label><input type="text" id="cfe_medidor" class="w-full border rounded p-2" value="3N4R93"></div>
-                        <div><label class="block text-sm font-medium">Tipo de Medidor</label><input type="text" id="cfe_tipo_medidor" class="w-full border rounded p-2" placeholder="Ej. Digital"></div>
-                        <div><label class="block text-sm font-medium">No. Fases</label><input type="text" id="cfe_fases" class="w-full border rounded p-2" value="2"></div>
-                        <div><label class="block text-sm font-medium">No. Hilos</label><input type="text" id="cfe_hilos" class="w-full border rounded p-2" value="3"></div>
-                        <div><label class="block text-sm font-medium">Voltaje</label><input type="text" id="cfe_voltaje" class="w-full border rounded p-2" value="220"></div>
-                        <div><label class="block text-sm font-medium">Tensión de Suministro</label><input type="text" id="cfe_tension_sum" class="w-full border rounded p-2" value="220"></div>
-                        <div><label class="block text-sm font-medium">Carga Total Instalada</label><input type="text" id="cfe_carga" class="w-full border rounded p-2" value="4"></div>
-                        <div><label class="block text-sm font-medium">Demanda Contratada</label><input type="text" id="cfe_demanda" class="w-full border rounded p-2" value="4"></div>
-                        <div><label class="block text-sm font-medium">Suministro en tensión:</label><input type="text" id="cfe_sum_tension" class="w-full border rounded p-2" placeholder="Ej. baja" value="baja"></div>
+                        <div><label class="block text-sm font-medium">Tarifa</label><input type="text" id="cfe_tarifa" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Número de Medidor</label><input type="text" id="cfe_medidor" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tipo de Medidor</label><input type="text" id="cfe_tipo_medidor" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">No. Fases</label><input type="text" id="cfe_fases" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">No. Hilos</label><input type="text" id="cfe_hilos" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Voltaje</label><input type="text" id="cfe_voltaje" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Tensión de Suministro</label><input type="text" id="cfe_tension_sum" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Carga Total Instalada</label><input type="text" id="cfe_carga" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Demanda Contratada</label><input type="text" id="cfe_demanda" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Suministro en tensión:</label><input type="text" id="cfe_sum_tension" class="w-full border rounded p-2"></div>
                         <div class="md:col-span-2"><label class="block text-sm font-medium">Celebrado con:</label><input type="text" id="cfe_celebrado" class="w-full border rounded p-2" value="Comisión Federal de Electricidad"></div>
                         <div class="md:col-span-3"><label class="block text-sm font-medium">¿Se adquiere el suministro para su consumo?</label><select id="cfe_adquiere" class="w-full border rounded p-2"><option>Sí</option><option>No</option></select></div>
                     </div>
@@ -75,37 +78,37 @@
                 <div>
                     <h3 class="text-lg font-bold text-gray-700 mb-3">4. Datos Técnicos del Sistema</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div><label class="block text-sm font-medium">Capacidad Instalada (kW)</label><input type="text" id="t_capacidad_kw" class="w-full border rounded p-2" value="2"></div>
+                        <div><label class="block text-sm font-medium">Capacidad Instalada (kW)</label><input type="text" id="t_capacidad_kw" class="w-full border rounded p-2"></div>
                         <div><label class="block text-sm font-medium">Potencia Instalada</label><input type="text" id="t_potencia" class="w-full border rounded p-2" value="no aplica"></div>
-                        <div><label class="block text-sm font-medium">Gen. Promedio (kWh/mes)</label><input type="text" id="t_gen_mensual" class="w-full border rounded p-2" value="339"></div>
-                        <div><label class="block text-sm font-medium">Cant. Paneles</label><input type="text" id="t_paneles" class="w-full border rounded p-2" value="4"></div>
-                        <div><label class="block text-sm font-medium">Cant. Inversores</label><input type="text" id="t_inversores" class="w-full border rounded p-2" value="1"></div>
-                        <div><label class="block text-sm font-medium">Marca Inversor</label><input type="text" id="t_marca_inv" class="w-full border rounded p-2" value="Hoymiles"></div>
+                        <div><label class="block text-sm font-medium">Gen. Promedio (kWh/mes)</label><input type="text" id="t_gen_mensual" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Cant. Paneles</label><input type="text" id="t_paneles" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Cant. Inversores</label><input type="text" id="t_inversores" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Marca Inversor</label><input type="text" id="t_marca_inv" class="w-full border rounded p-2"></div>
                         <div><label class="block text-sm font-medium">Tecnología Generación</label><input type="text" id="t_tecnologia" class="w-full border rounded p-2" value="Solar"></div>
-                        <div><label class="block text-sm font-medium">Tensión Interconexión</label><input type="text" id="t_tension_inter" class="w-full border rounded p-2" value="220"></div>
+                        <div><label class="block text-sm font-medium">Tensión Interconexión</label><input type="text" id="t_tension_inter" class="w-full border rounded p-2"></div>
                         <div><label class="block text-sm font-medium">Tipo Central (Tensión)</label><input type="text" id="t_tipo_central" class="w-full border rounded p-2" value="baja tensión"></div>
                         <div><label class="block text-sm font-medium">Régimen Contraprestación</label><input type="text" id="t_regimen" class="w-full border rounded p-2" value="net metering"></div>
-                        <div><label class="block text-sm font-medium">Coord. X (UTM)</label><input type="text" id="t_coord_x" class="w-full border rounded p-2" value="311309.55"></div>
-                        <div><label class="block text-sm font-medium">Coord. Y (UTM)</label><input type="text" id="t_coord_y" class="w-full border rounded p-2" value="2276730.9"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Latitud / Longitud</label><input type="text" id="t_lat_long" class="w-full border rounded p-2" value="20.580149754793773, -100.81033098822375"></div>
-                        <div><label class="block text-sm font-medium">Fecha Operación Normal</label><input type="text" id="t_fecha_op" class="w-full border rounded p-2" value="20/abril/2026"></div>
+                        <div><label class="block text-sm font-medium">Coord. X (UTM)</label><input type="text" id="t_coord_x" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Coord. Y (UTM)</label><input type="text" id="t_coord_y" class="w-full border rounded p-2"></div>
+                        <div class="md:col-span-2"><label class="block text-sm font-medium">Latitud / Longitud</label><input type="text" id="t_lat_long" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Fecha Operación Normal</label><input type="text" id="t_fecha_op" class="w-full border rounded p-2"></div>
                     </div>
                 </div>
 
                 <div>
                     <h3 class="text-lg font-bold text-gray-700 mb-3">5. Datos Administrativos</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium">Testigo 1</label><input type="text" id="a_testigo_1" class="w-full border rounded p-2" value="Norma Elizabeth Parra Ahumada"></div>
-                        <div><label class="block text-sm font-medium">Testigo 2</label><input type="text" id="a_testigo_2" class="w-full border rounded p-2" value="Ariel Corona Parra"></div>
-                        <div><label class="block text-sm font-medium">Fecha de Expedición</label><input type="text" id="a_fecha_exp" class="w-full border rounded p-2" value="20 de Abril de 2026"></div>
-                        <div><label class="block text-sm font-medium">Lugar de Firma</label><input type="text" id="a_lugar" class="w-full border rounded p-2" value="Celaya, Gto."></div>
+                        <div><label class="block text-sm font-medium">Testigo 1</label><input type="text" id="a_testigo_1" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Testigo 2</label><input type="text" id="a_testigo_2" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Fecha de Expedición</label><input type="text" id="a_fecha_exp" class="w-full border rounded p-2"></div>
+                        <div><label class="block text-sm font-medium">Lugar de Firma</label><input type="text" id="a_lugar" class="w-full border rounded p-2"></div>
                     </div>
                 </div>
 
             </form>
             <div class="mt-8 flex justify-end space-x-4">
-                <button onclick="generarFormato1()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700">Descargar Formato 1</button>
-                <button onclick="generarContratos()" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700">Descargar Contratos</button>
+                <button id="btn-gen-f1" onclick="generarFormato1()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 transition-colors w-56">Descargar Formato 1</button>
+                <button id="btn-gen-txt" onclick="generarContratos()" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-colors w-56">Descargar Contratos</button>
             </div>
         </section>
 
@@ -134,8 +137,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 <div class="flex flex-col lg:flex-row gap-4">
                     <div class="w-full lg:w-1/4 bg-gray-50 p-4 border rounded shadow-inner">
                         <h4 class="font-bold mb-4 text-sm border-b pb-2">Variables a Mapear</h4>
-                        <div id="drag-items" class="flex flex-wrap gap-2 relative min-h-[200px]">
-                            </div>
+                        <div id="drag-items" class="flex flex-wrap gap-2 relative min-h-[200px]"></div>
                         <button onclick="resetMappings()" class="mt-6 w-full bg-red-100 text-red-700 py-2 rounded text-xs font-bold shadow hover:bg-red-200">Reiniciar Posiciones</button>
                     </div>
                     
@@ -151,8 +153,6 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
 
     </main>
 
-    <div id="print-container" style="display:none; padding: 40px; font-family: Arial, sans-serif; line-height: 1.5; text-align: justify; white-space: pre-wrap;"></div>
-
     <script>
         // Data & State
         const fixedData = {
@@ -167,9 +167,38 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
         
         let savedMappings = JSON.parse(localStorage.getItem('cfe_mappings')) || {};
         let mapperLoaded = false;
-        const pdfScale = 1.35; // Rendering scale
+        const pdfScale = 1.35; 
 
-        // Tab Navigation
+        // Initialization & Autosave (Improvement 2)
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputs = document.querySelectorAll('#client-form input, #client-form select');
+            inputs.forEach(input => {
+                if (localStorage.getItem(input.id)) {
+                    input.value = localStorage.getItem(input.id);
+                }
+                input.addEventListener('input', () => {
+                    localStorage.setItem(input.id, input.value);
+                });
+            });
+            
+            if (localStorage.getItem('tpl_responsiva')) {
+                document.getElementById('tpl_responsiva').value = localStorage.getItem('tpl_responsiva');
+            }
+            document.getElementById('tpl_responsiva').addEventListener('input', (e) => {
+                localStorage.setItem('tpl_responsiva', e.target.value);
+            });
+        });
+
+        function limpiarFormulario() {
+            if(confirm('¿Borrar todos los datos del cliente actual?')) {
+                const inputs = document.querySelectorAll('#client-form input, #client-form select');
+                inputs.forEach(input => {
+                    input.value = '';
+                    localStorage.removeItem(input.id);
+                });
+            }
+        }
+
         function switchTab(tab) {
             document.getElementById('agente-view').classList.add('hidden');
             document.getElementById('admin-view').classList.add('hidden');
@@ -190,39 +219,61 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             return el ? el.value.toUpperCase() : "";
         }
 
-        // ================= ENGINE 1: TEXT PROSE =================
-        function generarContratos() {
-            let template = document.getElementById('tpl_responsiva').value;
-            
-            for (const [key, value] of Object.entries(fixedData)) {
-                template = template.replace(new RegExp('{{' + key + '}}', 'g'), value);
-            }
+        // ================= ENGINE 1: TEXT PROSE (Improvement 1 & 3) =================
+        async function generarContratos() {
+            const btn = document.getElementById('btn-gen-txt');
+            btn.innerText = "Generando...";
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
 
-            const inputs = document.querySelectorAll('#client-form input, #client-form select');
-            inputs.forEach(input => {
-                if (input.id) template = template.replace(new RegExp('{{' + input.id + '}}', 'g'), input.value.toUpperCase());
-            });
+            try {
+                let template = document.getElementById('tpl_responsiva').value;
+                
+                for (const [key, value] of Object.entries(fixedData)) {
+                    template = template.replace(new RegExp('{{' + key + '}}', 'g'), value);
+                }
 
-            const container = document.getElementById('print-container');
-            container.style.display = 'block';
-            container.innerText = template; // Use innerText to retain formatting, combined with white-space: pre-wrap in CSS
-
-            setTimeout(() => {
-                html2pdf().from(container).set({
-                    margin: 20,
-                    filename: 'Expediente_Textos_' + getVal('cfe_rpu') + '.pdf',
-                    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-                }).save().then(() => {
-                    container.style.display = 'none';
+                const inputs = document.querySelectorAll('#client-form input, #client-form select');
+                inputs.forEach(input => {
+                    if (input.id) template = template.replace(new RegExp('{{' + input.id + '}}', 'g'), input.value.toUpperCase());
                 });
-            }, 200); // 200ms delay to ensure canvas captures before hiding
+
+                // Detached DOM Rendering
+                const virtualContainer = document.createElement('div');
+                virtualContainer.style.width = '800px'; 
+                virtualContainer.style.padding = '40px';
+                virtualContainer.style.fontFamily = 'Arial, sans-serif';
+                virtualContainer.style.fontSize = '12pt';
+                virtualContainer.style.lineHeight = '1.5';
+                virtualContainer.style.textAlign = 'justify';
+                virtualContainer.style.whiteSpace = 'pre-wrap';
+                virtualContainer.innerText = template; 
+
+                await html2pdf().set({
+                    margin: 20,
+                    filename: 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.pdf',
+                    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                }).from(virtualContainer).save();
+
+            } catch (error) {
+                alert("Error generando contratos: " + error.message);
+            } finally {
+                btn.innerText = "Descargar Contratos";
+                btn.disabled = false;
+                btn.classList.remove('opacity-50');
+            }
         }
 
-        // ================= ENGINE 2: RIGID PDF GENERATOR =================
+        // ================= ENGINE 2: RIGID PDF GENERATOR (Improvement 3) =================
         async function generarFormato1() {
             if (Object.keys(savedMappings).length === 0) {
-                alert("Advertencia: No has configurado las coordenadas en la pestaña Admin. El documento puede salir en blanco.");
+                alert("Advertencia: No has configurado las coordenadas en la pestaña Admin.");
             }
+
+            const btn = document.getElementById('btn-gen-f1');
+            btn.innerText = "Generando...";
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
 
             try {
                 const url = new URL('formato1_base.pdf', window.location.href).href;
@@ -236,30 +287,34 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 const drawMapped = (key, text, size = 10) => {
                     const mapping = savedMappings[key];
                     if (mapping) {
-                        // PDF-lib draws from bottom-left. We convert our top-left mappings.
                         firstPage.drawText(text || "", { x: mapping.x, y: height - mapping.y, size: size });
                     }
                 };
 
-                // Draw Form Variables
                 varsToMap.forEach(v => {
                     let textToDraw = getVal(v) || fixedData[v] || "";
-                    if (v === 't_capacidad_kw') textToDraw += " KW";
-                    if (v === 't_gen_mensual') textToDraw += " KWh";
-                    if (v === 't_paneles') textToDraw += " PANELES";
-                    drawMapped(v, textToDraw);
+                    if (textToDraw !== "") {
+                        if (v === 't_capacidad_kw') textToDraw += " KW";
+                        if (v === 't_gen_mensual') textToDraw += " KWh";
+                        if (v === 't_paneles') textToDraw += " PANELES";
+                        drawMapped(v, textToDraw);
+                    }
                 });
 
                 const pdfBytes = await pdfDoc.save();
                 const blob = new Blob([pdfBytes], { type: "application/pdf" });
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = "Formato_1_" + getVal('cfe_rpu') + ".pdf";
+                link.download = "Formato_1_" + (getVal('cfe_rpu') || 'Sin_RPU') + ".pdf";
                 link.click();
 
             } catch (error) {
                 alert("Error: " + error.message);
                 console.error(error);
+            } finally {
+                btn.innerText = "Descargar Formato 1";
+                btn.disabled = false;
+                btn.classList.remove('opacity-50');
             }
         }
 
@@ -285,7 +340,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 renderChips();
 
             } catch (err) {
-                document.getElementById('pdf-mapper-container').innerHTML = "<div class='p-8 text-red-600 font-bold'>Error cargando formato1_base.pdf visualmente. Asegúrate de estar en GitHub Pages.</div>";
+                document.getElementById('pdf-mapper-container').innerHTML = "<div class='p-8 text-red-600 font-bold'>Error cargando formato1_base.pdf visualmente. Asegúrate de estar en GitHub Pages y que el archivo exista.</div>";
             }
         }
 
@@ -302,7 +357,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
 
                 if (savedMappings[v]) {
                     chip.style.left = (savedMappings[v].x * pdfScale) + 'px';
-                    chip.style.top = (savedMappings[v].y * pdfScale) - 12 + 'px'; // -12 adjusts visual box to text baseline
+                    chip.style.top = (savedMappings[v].y * pdfScale) - 12 + 'px'; 
                     dropLayer.appendChild(chip);
                 } else {
                     chip.style.position = 'relative';
@@ -348,7 +403,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 document.onmousemove = null;
 
                 const realX = parseInt(elmnt.style.left, 10) / pdfScale;
-                const realY = (parseInt(elmnt.style.top, 10) + 12) / pdfScale; // +12 maps baseline back down
+                const realY = (parseInt(elmnt.style.top, 10) + 12) / pdfScale;
                 
                 savedMappings[elmnt.id.replace('chip_', '')] = { x: realX, y: realY };
                 localStorage.setItem('cfe_mappings', JSON.stringify(savedMappings));
