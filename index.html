@@ -218,7 +218,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             return el ? el.value.toUpperCase() : "";
         }
 
-        // ================= ENGINE 1: TEXT PROSE (Z-Index Underlay for Waterfox/Gecko) =================
+        // ================= ENGINE 1: TEXT PROSE (Direct to Word .doc Export) =================
         async function generarContratos() {
             const btn = document.getElementById('btn-gen-txt');
             btn.innerText = "Generando...";
@@ -228,34 +228,57 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             try {
                 let template = document.getElementById('tpl_responsiva').value;
                 
+                // 1. Inject Fixed Data
                 for (const [key, value] of Object.entries(fixedData)) {
                     template = template.replace(new RegExp('{{' + key + '}}', 'g'), value);
                 }
 
+                // 2. Inject Form Data
                 const inputs = document.querySelectorAll('#client-form input, #client-form select');
                 inputs.forEach(input => {
                     if (input.id) template = template.replace(new RegExp('{{' + input.id + '}}', 'g'), input.value.toUpperCase());
                 });
 
-                // Convert newlines to HTML breaks so the browser formats paragraphs correctly
+                // 3. Convert plaintext line breaks to HTML breaks for Word parsing
                 const formattedHTML = template.replace(/\n/g, '<br>');
 
-                // Inject into the physical Z-0 Underlay
-                const container = document.getElementById('print-underlay');
-                container.innerHTML = formattedHTML;
+                // 4. Construct the Microsoft Office XML/HTML namespace wrapper
+                const wordDocument = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset='utf-8'>
+                        <title>Expediente CFE</title>
+                        <xml>
+                            <w:WordDocument>
+                                <w:View>Print</w:View>
+                                <w:Zoom>100</w:Zoom>
+                                <w:DoNotOptimizeForBrowser/>
+                            </w:WordDocument>
+                        </xml>
+                        <style>
+                            body { font-family: Arial, sans-serif; font-size: 12pt; text-align: justify; line-height: 1.5; }
+                        </style>
+                    </head>
+                    <body>
+                        ${formattedHTML}
+                    </body>
+                    </html>
+                `;
 
-                // Double RequestAnimationFrame: Forces Gecko to recalculate layout and paint the frame
-                await new Promise(resolve => requestAnimationFrame(resolve));
-                await new Promise(resolve => requestAnimationFrame(resolve));
-
-                await html2pdf().set({
-                    margin: 20,
-                    filename: 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.pdf',
-                    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-                }).from(container).save();
-
-                // Clear the underlay after generation
-                container.innerHTML = '';
+                // 5. Create the application/msword Blob (the \ufeff is the BOM for UTF-8 encoding)
+                const blob = new Blob(['\ufeff', wordDocument], { type: 'application/msword' });
+                const url = window.URL.createObjectURL(blob);
+                
+                // 6. Trigger Native Download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.doc';
+                document.body.appendChild(link);
+                link.click();
+                
+                // 7. Cleanup
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
 
             } catch (error) {
                 alert("Error generando contratos: " + error.message);
