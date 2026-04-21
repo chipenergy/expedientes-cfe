@@ -10,148 +10,147 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';</script>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans pb-20">
+<body class="bg-gray-100 text-gray-800 font-sans relative">
 
-    <nav class="bg-green-600 text-white p-4 shadow-md">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Chipenergy Documentos CFE</h1>
-            <div>
-                <button onclick="switchTab('agente')" id="btn-agente" class="px-4 py-2 rounded bg-green-800 font-bold text-sm">Modo Agente</button>
-                <button onclick="switchTab('admin')" id="btn-admin" class="px-4 py-2 hover:bg-green-700 rounded text-sm">Configuración (Admin)</button>
+    <div class="relative z-10 bg-gray-100 min-h-screen pb-20">
+        <nav class="bg-green-600 text-white p-4 shadow-md">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <h1 class="text-xl font-bold">Chipenergy Documentos CFE</h1>
+                <div>
+                    <button onclick="switchTab('agente')" id="btn-agente" class="px-4 py-2 rounded bg-green-800 font-bold text-sm">Modo Agente</button>
+                    <button onclick="switchTab('admin')" id="btn-admin" class="px-4 py-2 hover:bg-green-700 rounded text-sm">Configuración (Admin)</button>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main class="max-w-6xl mx-auto mt-8 p-4">
-        
-        <section id="agente-view" class="bg-white p-8 rounded-lg shadow-md">
-            <div class="flex justify-between items-center mb-6 border-b pb-2">
-                <h2 class="text-2xl font-semibold">Captura de Datos del Cliente</h2>
-                <button onclick="limpiarFormulario()" class="text-sm text-red-600 hover:text-red-800 border border-red-600 px-3 py-1 rounded">Limpiar Formulario</button>
-            </div>
-            <form id="client-form" class="space-y-8">
-                
-                <div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-3">1. Datos Personales</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium">Nombre Completo</label><input type="text" id="c_nombre" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Teléfono</label><input type="text" id="c_telefono" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Correo Electrónico</label><input type="email" id="c_correo" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">INE No.</label><input type="text" id="c_ine" class="w-full border rounded p-2"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-3">2. Datos del Domicilio</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Calle</label><input type="text" id="d_calle" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Número Exterior</label><input type="text" id="d_num_ext" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Número Interior</label><input type="text" id="d_num_int" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Código Postal</label><input type="text" id="d_cp" class="w-full border rounded p-2"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Colonia / Población</label><input type="text" id="d_colonia" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Municipio / Ciudad</label><input type="text" id="d_municipio" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Estado</label><input type="text" id="d_estado" class="w-full border rounded p-2"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-3">3. Datos del Servicio CFE</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div><label class="block text-sm font-medium">RPU (12 dígitos)</label><input type="text" id="cfe_rpu" class="w-full border rounded p-2"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">RMU</label><input type="text" id="cfe_rmu" class="w-full border rounded p-2"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Número de Cuenta</label><input type="text" id="cfe_cuenta" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Tarifa</label><input type="text" id="cfe_tarifa" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Número de Medidor</label><input type="text" id="cfe_medidor" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Tipo de Medidor</label><input type="text" id="cfe_tipo_medidor" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">No. Fases</label><input type="text" id="cfe_fases" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">No. Hilos</label><input type="text" id="cfe_hilos" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Voltaje</label><input type="text" id="cfe_voltaje" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Tensión de Suministro</label><input type="text" id="cfe_tension_sum" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Carga Total Instalada</label><input type="text" id="cfe_carga" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Demanda Contratada</label><input type="text" id="cfe_demanda" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Suministro en tensión:</label><input type="text" id="cfe_sum_tension" class="w-full border rounded p-2"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Celebrado con:</label><input type="text" id="cfe_celebrado" class="w-full border rounded p-2" value="Comisión Federal de Electricidad"></div>
-                        <div class="md:col-span-3"><label class="block text-sm font-medium">¿Se adquiere el suministro para su consumo?</label><select id="cfe_adquiere" class="w-full border rounded p-2"><option>Sí</option><option>No</option></select></div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-3">4. Datos Técnicos del Sistema</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div><label class="block text-sm font-medium">Capacidad Instalada (kW)</label><input type="text" id="t_capacidad_kw" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Potencia Instalada</label><input type="text" id="t_potencia" class="w-full border rounded p-2" value="no aplica"></div>
-                        <div><label class="block text-sm font-medium">Gen. Promedio (kWh/mes)</label><input type="text" id="t_gen_mensual" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Cant. Paneles</label><input type="text" id="t_paneles" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Cant. Inversores</label><input type="text" id="t_inversores" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Marca Inversor</label><input type="text" id="t_marca_inv" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Tecnología Generación</label><input type="text" id="t_tecnologia" class="w-full border rounded p-2" value="Solar"></div>
-                        <div><label class="block text-sm font-medium">Tensión Interconexión</label><input type="text" id="t_tension_inter" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Tipo Central (Tensión)</label><input type="text" id="t_tipo_central" class="w-full border rounded p-2" value="baja tensión"></div>
-                        <div><label class="block text-sm font-medium">Régimen Contraprestación</label><input type="text" id="t_regimen" class="w-full border rounded p-2" value="net metering"></div>
-                        <div><label class="block text-sm font-medium">Coord. X (UTM)</label><input type="text" id="t_coord_x" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Coord. Y (UTM)</label><input type="text" id="t_coord_y" class="w-full border rounded p-2"></div>
-                        <div class="md:col-span-2"><label class="block text-sm font-medium">Latitud / Longitud</label><input type="text" id="t_lat_long" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Fecha Operación Normal</label><input type="text" id="t_fecha_op" class="w-full border rounded p-2"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-3">5. Datos Administrativos</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-medium">Testigo 1</label><input type="text" id="a_testigo_1" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Testigo 2</label><input type="text" id="a_testigo_2" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Fecha de Expedición</label><input type="text" id="a_fecha_exp" class="w-full border rounded p-2"></div>
-                        <div><label class="block text-sm font-medium">Lugar de Firma</label><input type="text" id="a_lugar" class="w-full border rounded p-2"></div>
-                    </div>
-                </div>
-
-            </form>
-            <div class="mt-8 flex justify-end space-x-4">
-                <button id="btn-gen-f1" onclick="generarFormato1()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 transition-colors w-56">Descargar Formato 1</button>
-                <button id="btn-gen-txt" onclick="generarContratos()" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-colors w-56">Descargar Contratos</button>
-            </div>
-        </section>
-
-        <section id="admin-view" class="bg-white p-8 rounded-lg shadow-md hidden">
-            <h2 class="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Motor de Plantillas (Admin)</h2>
+        <main class="max-w-6xl mx-auto mt-8 p-4">
             
-            <div class="mb-12">
-                <h3 class="text-xl font-bold mb-2">1. Textos Dinámicos (Contratos y Responsiva)</h3>
-                <p class="text-sm mb-4">Edita el texto base. Usa corchetes <b>{{variable_id}}</b> para que el sistema los reemplace automáticamente.</p>
-                <label class="block font-bold mt-4 text-sm text-gray-700">Plantilla: Responsiva</label>
-                <textarea id="tpl_responsiva" class="w-full border rounded p-4 h-48 font-mono text-sm mt-2">
-Celaya, Gto. a {{a_fecha_exp}}
+            <section id="agente-view" class="bg-white p-8 rounded-lg shadow-md">
+                <div class="flex justify-between items-center mb-6 border-b pb-2">
+                    <h2 class="text-2xl font-semibold">Captura de Datos del Cliente</h2>
+                    <button onclick="limpiarFormulario()" class="text-sm text-red-600 hover:text-red-800 border border-red-600 px-3 py-1 rounded">Limpiar Formulario</button>
+                </div>
+                <form id="client-form" class="space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-700 mb-3">1. Datos Personales</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium">Nombre Completo</label><input type="text" id="c_nombre" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Teléfono</label><input type="text" id="c_telefono" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Correo Electrónico</label><input type="email" id="c_correo" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">INE No.</label><input type="text" id="c_ine" class="w-full border rounded p-2"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-700 mb-3">2. Datos del Domicilio</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2"><label class="block text-sm font-medium">Calle</label><input type="text" id="d_calle" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Número Exterior</label><input type="text" id="d_num_ext" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Número Interior</label><input type="text" id="d_num_int" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Código Postal</label><input type="text" id="d_cp" class="w-full border rounded p-2"></div>
+                            <div class="md:col-span-2"><label class="block text-sm font-medium">Colonia / Población</label><input type="text" id="d_colonia" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Municipio / Ciudad</label><input type="text" id="d_municipio" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Estado</label><input type="text" id="d_estado" class="w-full border rounded p-2"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-700 mb-3">3. Datos del Servicio CFE</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div><label class="block text-sm font-medium">RPU (12 dígitos)</label><input type="text" id="cfe_rpu" class="w-full border rounded p-2"></div>
+                            <div class="md:col-span-2"><label class="block text-sm font-medium">RMU</label><input type="text" id="cfe_rmu" class="w-full border rounded p-2"></div>
+                            <div class="md:col-span-2"><label class="block text-sm font-medium">Número de Cuenta</label><input type="text" id="cfe_cuenta" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Tarifa</label><input type="text" id="cfe_tarifa" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Número de Medidor</label><input type="text" id="cfe_medidor" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Tipo de Medidor</label><input type="text" id="cfe_tipo_medidor" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">No. Fases</label><input type="text" id="cfe_fases" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">No. Hilos</label><input type="text" id="cfe_hilos" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Voltaje</label><input type="text" id="cfe_voltaje" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Tensión de Suministro</label><input type="text" id="cfe_tension_sum" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Carga Total Instalada</label><input type="text" id="cfe_carga" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Demanda Contratada</label><input type="text" id="cfe_demanda" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Suministro en tensión:</label><input type="text" id="cfe_sum_tension" class="w-full border rounded p-2"></div>
+                            <div class="md:col-span-2"><label class="block text-sm font-medium">Celebrado con:</label><input type="text" id="cfe_celebrado" class="w-full border rounded p-2" value="Comisión Federal de Electricidad"></div>
+                            <div class="md:col-span-3"><label class="block text-sm font-medium">¿Se adquiere el suministro para su consumo?</label><select id="cfe_adquiere" class="w-full border rounded p-2"><option>Sí</option><option>No</option></select></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-700 mb-3">4. Datos Técnicos del Sistema</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div><label class="block text-sm font-medium">Capacidad Instalada (kW)</label><input type="text" id="t_capacidad_kw" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Potencia Instalada</label><input type="text" id="t_potencia" class="w-full border rounded p-2" value="no aplica"></div>
+                            <div><label class="block text-sm font-medium">Gen. Promedio (kWh/mes)</label><input type="text" id="t_gen_mensual" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Cant. Paneles</label><input type="text" id="t_paneles" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Cant. Inversores</label><input type="text" id="t_inversores" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Marca Inversor</label><input type="text" id="t_marca_inv" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Tecnología Generación</label><input type="text" id="t_tecnologia" class="w-full border rounded p-2" value="Solar"></div>
+                            <div><label class="block text-sm font-medium">Tensión Interconexión</label><input type="text" id="t_tension_inter" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Tipo Central (Tensión)</label><input type="text" id="t_tipo_central" class="w-full border rounded p-2" value="baja tensión"></div>
+                            <div><label class="block text-sm font-medium">Régimen Contraprestación</label><input type="text" id="t_regimen" class="w-full border rounded p-2" value="net metering"></div>
+                            <div><label class="block text-sm font-medium">Coord. X (UTM)</label><input type="text" id="t_coord_x" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Coord. Y (UTM)</label><input type="text" id="t_coord_y" class="w-full border rounded p-2"></div>
+                            <div class="md:col-span-2"><label class="block text-sm font-medium">Latitud / Longitud</label><input type="text" id="t_lat_long" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Fecha Operación Normal</label><input type="text" id="t_fecha_op" class="w-full border rounded p-2"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-700 mb-3">5. Datos Administrativos</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label class="block text-sm font-medium">Testigo 1</label><input type="text" id="a_testigo_1" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Testigo 2</label><input type="text" id="a_testigo_2" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Fecha de Expedición</label><input type="text" id="a_fecha_exp" class="w-full border rounded p-2"></div>
+                            <div><label class="block text-sm font-medium">Lugar de Firma</label><input type="text" id="a_lugar" class="w-full border rounded p-2"></div>
+                        </div>
+                    </div>
+                </form>
+                <div class="mt-8 flex justify-end space-x-4">
+                    <button id="btn-gen-f1" onclick="generarFormato1()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 transition-colors w-56">Descargar Formato 1</button>
+                    <button id="btn-gen-txt" onclick="generarContratos()" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition-colors w-56">Descargar Contratos</button>
+                </div>
+            </section>
+
+            <section id="admin-view" class="bg-white p-8 rounded-lg shadow-md hidden">
+                <h2 class="text-2xl font-semibold mb-6 border-b pb-2 text-gray-800">Motor de Plantillas (Admin)</h2>
+                
+                <div class="mb-12">
+                    <h3 class="text-xl font-bold mb-2">1. Textos Dinámicos (Contratos y Responsiva)</h3>
+                    <p class="text-sm mb-4">Edita el texto base. Usa corchetes <b>{{variable_id}}</b> para que el sistema los reemplace automáticamente.</p>
+                    <label class="block font-bold mt-4 text-sm text-gray-700">Plantilla: Responsiva</label>
+                    <textarea id="tpl_responsiva" class="w-full border rounded p-4 h-48 font-mono text-sm mt-2">Celaya, Gto. a {{a_fecha_exp}}
 
 RESPONSIVA
 
 Mediante la siguiente carta responsiva, yo C. {{c_nombre}} que efectúa un contrato Mercantil de Suministro Básico de Energía Eléctrica, en el domicilio {{d_calle}} {{d_num_ext}}, {{d_colonia}}, C.P. {{d_cp}}, {{d_municipio}}, {{d_estado}}, con Número de Servicio {{cfe_rpu}}, gestionado por {{gestor_nombre}} con INE {{gestor_ine}}.
 
-Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuenta con las claves para la correcta facturación...
-                </textarea>
-            </div>
+Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuenta con las claves para la correcta facturación...</textarea>
+                </div>
 
-            <div>
-                <h3 class="text-xl font-bold mb-2">2. Mapeo Visual (Formato 1)</h3>
-                <p class="text-sm text-gray-600 mb-4">Arrastra las etiquetas rojas sobre el documento para definir las coordenadas de impresión. Las coordenadas se guardan automáticamente en tu navegador local.</p>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">2. Mapeo Visual (Formato 1)</h3>
+                    <p class="text-sm text-gray-600 mb-4">Arrastra las etiquetas rojas sobre el documento para definir las coordenadas.</p>
 
-                <div class="flex flex-col lg:flex-row gap-4">
-                    <div class="w-full lg:w-1/4 bg-gray-50 p-4 border rounded shadow-inner">
-                        <h4 class="font-bold mb-4 text-sm border-b pb-2">Variables a Mapear</h4>
-                        <div id="drag-items" class="flex flex-wrap gap-2 relative min-h-[200px]"></div>
-                        <button onclick="resetMappings()" class="mt-6 w-full bg-red-100 text-red-700 py-2 rounded text-xs font-bold shadow hover:bg-red-200">Reiniciar Posiciones</button>
-                    </div>
-                    
-                    <div class="w-full lg:w-3/4 border rounded bg-gray-300 relative overflow-auto shadow-inner" style="height: 700px;">
-                        <div id="pdf-mapper-container" class="relative bg-white shadow-lg m-4 origin-top-left" style="width: 800px; height: 1035px;">
-                            <canvas id="pdf-render-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
-                            <div id="drop-layer" class="absolute top-0 left-0 w-full h-full overflow-hidden"></div>
+                    <div class="flex flex-col lg:flex-row gap-4">
+                        <div class="w-full lg:w-1/4 bg-gray-50 p-4 border rounded shadow-inner">
+                            <h4 class="font-bold mb-4 text-sm border-b pb-2">Variables a Mapear</h4>
+                            <div id="drag-items" class="flex flex-wrap gap-2 relative min-h-[200px]"></div>
+                            <button onclick="resetMappings()" class="mt-6 w-full bg-red-100 text-red-700 py-2 rounded text-xs font-bold shadow hover:bg-red-200">Reiniciar Posiciones</button>
+                        </div>
+                        
+                        <div class="w-full lg:w-3/4 border rounded bg-gray-300 relative overflow-auto shadow-inner" style="height: 700px;">
+                            <div id="pdf-mapper-container" class="relative bg-white shadow-lg m-4 origin-top-left" style="width: 800px; height: 1035px;">
+                                <canvas id="pdf-render-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                                <div id="drop-layer" class="absolute top-0 left-0 w-full h-full overflow-hidden"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
+    </div>
 
-    </main>
+    <div id="print-underlay" class="absolute top-0 left-0 z-0 bg-white" style="width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.5; text-align: justify; color: black; box-sizing: border-box; min-height: 1100px;"></div>
 
     <script>
         // Data & State
@@ -169,7 +168,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
         let mapperLoaded = false;
         const pdfScale = 1.35; 
 
-        // Initialization & Autosave (Improvement 2)
+        // Initialization & Autosave
         document.addEventListener("DOMContentLoaded", () => {
             const inputs = document.querySelectorAll('#client-form input, #client-form select');
             inputs.forEach(input => {
@@ -219,7 +218,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             return el ? el.value.toUpperCase() : "";
         }
 
-        // ================= ENGINE 1: TEXT PROSE (Raw String / Iframe Method) =================
+        // ================= ENGINE 1: TEXT PROSE (Z-Index Underlay for Waterfox/Gecko) =================
         async function generarContratos() {
             const btn = document.getElementById('btn-gen-txt');
             btn.innerText = "Generando...";
@@ -229,35 +228,34 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             try {
                 let template = document.getElementById('tpl_responsiva').value;
                 
-                // 1. Inject Fixed Data
                 for (const [key, value] of Object.entries(fixedData)) {
                     template = template.replace(new RegExp('{{' + key + '}}', 'g'), value);
                 }
 
-                // 2. Inject Form Data
                 const inputs = document.querySelectorAll('#client-form input, #client-form select');
                 inputs.forEach(input => {
                     if (input.id) template = template.replace(new RegExp('{{' + input.id + '}}', 'g'), input.value.toUpperCase());
                 });
 
-                // 3. Convert plaintext line breaks to HTML breaks
+                // Convert newlines to HTML breaks so the browser formats paragraphs correctly
                 const formattedHTML = template.replace(/\n/g, '<br>');
 
-                // 4. Construct the isolated HTML wrapper string. 
-                // We enforce a white background, black text, and an 800px boundary so the camera cannot fail.
-                const rawHtmlString = `
-                    <div style="width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.5; text-align: justify; background-color: #ffffff; color: #000000;">
-                        ${formattedHTML}
-                    </div>
-                `;
+                // Inject into the physical Z-0 Underlay
+                const container = document.getElementById('print-underlay');
+                container.innerHTML = formattedHTML;
 
-                // 5. Pass the raw string directly to the engine
-                console.log(rawHtmlString);
+                // Double RequestAnimationFrame: Forces Gecko to recalculate layout and paint the frame
+                await new Promise(resolve => requestAnimationFrame(resolve));
+                await new Promise(resolve => requestAnimationFrame(resolve));
+
                 await html2pdf().set({
                     margin: 20,
                     filename: 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.pdf',
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-                }).from(rawHtmlString).outputImg().then(function(img) { document.body.appendChild(img); });
+                }).from(container).save();
+
+                // Clear the underlay after generation
+                container.innerHTML = '';
 
             } catch (error) {
                 alert("Error generando contratos: " + error.message);
@@ -269,7 +267,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             }
         }
 
-        // ================= ENGINE 2: RIGID PDF GENERATOR (Improvement 3) =================
+        // ================= ENGINE 2: RIGID PDF GENERATOR =================
         async function generarFormato1() {
             if (Object.keys(savedMappings).length === 0) {
                 alert("Advertencia: No has configurado las coordenadas en la pestaña Admin.");
