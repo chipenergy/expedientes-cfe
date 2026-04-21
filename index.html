@@ -252,6 +252,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 `;
 
                 // 5. Pass the raw string directly to the engine
+                console.log(rawHtmlString);
                 await html2pdf().set({
                     margin: 20,
                     filename: 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.pdf',
