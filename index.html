@@ -219,7 +219,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             return el ? el.value.toUpperCase() : "";
         }
 
-        // ================= ENGINE 1: TEXT PROSE (Off-Screen Live DOM Rendering) =================
+        // ================= ENGINE 1: TEXT PROSE (Raw String / Iframe Method) =================
         async function generarContratos() {
             const btn = document.getElementById('btn-gen-txt');
             btn.innerText = "Generando...";
@@ -229,52 +229,38 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
             try {
                 let template = document.getElementById('tpl_responsiva').value;
                 
-                // 1. Replace Fixed Data
+                // 1. Inject Fixed Data
                 for (const [key, value] of Object.entries(fixedData)) {
                     template = template.replace(new RegExp('{{' + key + '}}', 'g'), value);
                 }
 
-                // 2. Replace Form Data
+                // 2. Inject Form Data
                 const inputs = document.querySelectorAll('#client-form input, #client-form select');
                 inputs.forEach(input => {
                     if (input.id) template = template.replace(new RegExp('{{' + input.id + '}}', 'g'), input.value.toUpperCase());
                 });
 
-                // 3. Format Text for HTML Rendering
-                // html2canvas requires explicit <br> tags instead of raw \n to render multi-line text correctly
+                // 3. Convert plaintext line breaks to HTML breaks
                 const formattedHTML = template.replace(/\n/g, '<br>');
 
-                // 4. Create Off-Screen Live DOM Element
-                const offScreenContainer = document.createElement('div');
-                offScreenContainer.style.position = 'absolute';
-                offScreenContainer.style.left = '-9999px';
-                offScreenContainer.style.top = '-9999px';
-                offScreenContainer.style.width = '800px'; 
-                offScreenContainer.style.padding = '40px';
-                offScreenContainer.style.fontFamily = 'Arial, sans-serif';
-                offScreenContainer.style.fontSize = '12pt';
-                offScreenContainer.style.lineHeight = '1.5';
-                offScreenContainer.style.textAlign = 'justify';
-                
-                offScreenContainer.innerHTML = formattedHTML;
+                // 4. Construct the isolated HTML wrapper string. 
+                // We enforce a white background, black text, and an 800px boundary so the camera cannot fail.
+                const rawHtmlString = `
+                    <div style="width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.5; text-align: justify; background-color: #ffffff; color: #000000;">
+                        ${formattedHTML}
+                    </div>
+                `;
 
-                // 5. Attach to live document so the browser computes its physical dimensions
-                document.body.appendChild(offScreenContainer);
-
-                // 6. Generate PDF using a brief requestAnimationFrame to ensure CSS is applied
-                await new Promise(resolve => requestAnimationFrame(resolve));
-                
+                // 5. Pass the raw string directly to the engine
                 await html2pdf().set({
                     margin: 20,
                     filename: 'Expediente_Textos_' + (getVal('cfe_rpu') || 'Sin_RPU') + '.pdf',
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-                }).from(offScreenContainer).save();
-
-                // 7. Destroy the temporary container to keep the DOM clean
-                document.body.removeChild(offScreenContainer);
+                }).from(rawHtmlString).save();
 
             } catch (error) {
                 alert("Error generando contratos: " + error.message);
+                console.error(error);
             } finally {
                 btn.innerText = "Descargar Contratos";
                 btn.disabled = false;
