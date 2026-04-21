@@ -230,7 +230,7 @@ Me comprometo a NO ENCENDER el sistema hasta que confirme si el servicio ya cuen
                 if (!response.ok) throw new Error("No se encontró formato1_base.pdf");
 
                 const pdfDoc = await PDFLib.PDFDocument.load(await response.arrayBuffer());
-                const firstPage = pdfDoc.getPages();
+                const firstPage = pdfDoc.getPages()[0];
                 const { height } = firstPage.getSize();
 
                 const drawMapped = (key, text, size = 10) => {
